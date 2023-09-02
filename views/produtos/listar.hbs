@@ -1,0 +1,44 @@
+{{#> base}}
+    {{#*inline "title"}}Produtos{{/inline}}
+
+    {{#*inline "mainContent"}}
+        <h1>Produtos</h1>
+
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Nome:</th>
+                <th>Taxa Rentabilidade:</th>
+                <th>Taxa Administração:</th>
+                <th>Destinação:</th>
+                <th>Prazo Minimo:</th>
+                <th>Vencimento:</th>
+
+            </tr>
+            {{#each produtos as |produto|}}
+            <tr>
+                <td>{{produto.id}}</td>
+                <td>{{produto.nome}}</td>
+                <td>{{produto.disponibilidade}}</td>
+                <td>{{produto.taxaRentabilidade}}</td>
+                <td>{{produto.taxaAdministracao}}</td>
+                <td>{{produto.destinacao}}</td>
+                <td>{{produto.prazoMinimo}}</td>
+                <td>{{produto.vencimento}}</td>
+                <td>{{produto.liquidez}}</td>
+                <td>
+                    <a href="/produtos/alternar-status?id={{produto.id}}">
+                    {{#if produto.disponivel}}
+                        Suspender
+                    {{else}}
+                        Disponibilizar
+                    {{/if}}
+                    </a>
+                    <a href="/produtos/remover?id={{produto.id}}">Remover</a>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    {{/inline}}
+
+{{/base}}
