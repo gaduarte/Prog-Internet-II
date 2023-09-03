@@ -12,5 +12,11 @@ describe('ProdutosService', () => {
     service = module.get<ProdutosService>(ProdutosService);
   });
 
+<<<<<<< HEAD
   
+=======
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+>>>>>>> 1941279253b4e94b4ac9af1993b6d98993f13269
 });
