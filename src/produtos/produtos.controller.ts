@@ -1,41 +1,44 @@
-import { Controller, Get, Redirect, Render, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, NotFoundException, Param } from '@nestjs/common';
 import { ProdutosService } from './produtos.service';
 import { NovoProdutoDto } from './types/Produto-lista';
 
-@Controller('produtos')
+@Controller('api/produtos') 
 export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
-  @Get('/listar')
-  @Render('produtos/listar')
-    public listarProdutos(){
-        return { produtos: this.produtosService.todos() };
-    };
+  @Get('/listar') // Endpoint para listar produtos em formato JSON
+  public listarProdutos() {
+    const produtos = this.produtosService.todos();
+    return { produtos }; 
+  }
 
-    @Get('/novo')
-    @Render('produtos/form')
-    public formularioProduto(){
-        return;
-    }
+  @Get('/:id') // Endpoint para obter um produto por ID em formato JSON
+  public obterProdutoPorId(@Param('id') idProduto: string) {
+  const produto = this.produtosService.obterPorId(idProduto);
 
-    @Post('/salvar')
-    @Redirect('/produtos/listar')
-    public salvarProduto(@Body() input: NovoProdutoDto){
-        this.produtosService.cadastrar(input);
-    }
+  if (!produto) {
+    throw new NotFoundException(`Produto com ID ${idProduto} não encontrado`);
+  }
+
+  return { produto };
+}
 
 
-    @Get('/alternar-status')
-    @Redirect('/produtos/listar')
-    public alternarStatus(@Query('id') idProduto: string){
-        this.produtosService.alternarStatus(idProduto);
-        return;
-    }
+  @Post('/salvar') 
+  public salvarProduto(@Body() input: NovoProdutoDto) {
+    const novoProduto = this.produtosService.cadastrar(input);
+    return { produto: novoProduto }; 
+  }
 
-    @Get('/remover')
-    @Redirect('/produtos/listar')
-    public removerProduto(@Query('id') idProduto: string){
-        this.produtosService.remover(idProduto);
-    }
+  @Get('/alternar-status') // Endpoint para alternar o status de um produto em formato JSON
+  public alternarStatus(@Query('id') idProduto: string) {
+    this.produtosService.alternarStatus(idProduto);
+    return { message: 'Status alterado com sucesso' }; 
+  }
 
+  @Get('/remover') // Endpoint para remover um produto em formato JSON
+  public removerProduto(@Query('id') idProduto: string) {
+    this.produtosService.remover(idProduto);
+    return { message: 'Produto removido com sucesso' }; 
+  }
 }
