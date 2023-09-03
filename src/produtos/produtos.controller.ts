@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, NotFoundException, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, NotFoundException, Param, Render } from '@nestjs/common';
 import { ProdutosService } from './produtos.service';
 import { NovoProdutoDto } from './types/Produto-lista';
 
@@ -23,6 +23,12 @@ export class ProdutosController {
   return { produto };
 }
 
+  /*@Get('/novo')
+  @Render('produtos/form')
+  public formularioProduto(){
+        return;
+    }
+*/
 
   @Post('/salvar') 
   public salvarProduto(@Body() input: NovoProdutoDto) {
