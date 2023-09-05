@@ -9,14 +9,14 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
   @Get('/listar')
-  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
+  @ApiResponse({status: 200, type: Produto, isArray: true})
   public listarProdutos() {
     const produtos = this.produtosService.todos();
     return { produtos }; 
   }
 
   @Get('/:id') 
-  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
+  @ApiResponse({status: 200, type: Produto})
   public obterProdutoPorId(@Param('id') idProduto: string) {
   const produto = this.produtosService.obterPorId(idProduto);
 
@@ -34,14 +34,14 @@ export class ProdutosController {
   }
 
   @Get('/alternar-status') 
-  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
+  @ApiResponse({ status: 204, description: 'Status alterado com sucesso'})
   public alternarStatus(@Query('id') idProduto: string) {
     this.produtosService.alternarStatus(idProduto);
     return { message: 'Status alterado com sucesso' }; 
   }
 
   @Get('/remover') 
-  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
+  @ApiResponse({status: 204, description: 'Removido com Sucesso'})
   public removerProduto(@Query('id') idProduto: string) {
     this.produtosService.remover(idProduto);
     return { message: 'Produto removido com sucesso' }; 
