@@ -24,15 +24,12 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
-<<<<<<< HEAD
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
-=======
+    "@nestjs/swagger": "^7.1.10",
     "hbs": "^4.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.0",
     "ulidx": "^2.1.0"
->>>>>>> 1941279253b4e94b4ac9af1993b6d98993f13269
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

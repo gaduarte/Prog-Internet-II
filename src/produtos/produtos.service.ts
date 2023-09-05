@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Produto, ProdutoStatus, NovoProdutoDto, ProdutosLiquidez } from "./types/Produto-lista";
+import { Produto, ProdutoStatus, ProdutosLiquidez } from "./types/Produto-lista";
+import { NovoProdutoDto } from './dto/create.product.dto';
 import { ulid } from 'ulidx';
 
 const produtos: Produto[] = [{
@@ -9,7 +10,7 @@ const produtos: Produto[] = [{
     status: ProdutoStatus.DISPONIVEL,
     taxaAdministracao: 1,
     taxaRentabilidade: 15,
-    prazoMinimo: new Date(2024,2,11),
+    prazoMinimo: 6,
     vencimento: new Date(2025,10,12),
     liquidez: ProdutosLiquidez.SIM
 }];
@@ -25,7 +26,8 @@ export class ProdutosService {
             ...input,
             id: ulid(),
             status: ProdutoStatus.DISPONIVEL,
-            alternarStatus(){}
+            alternarStatus(){},
+            prazoMinimo: 6
         };
         produtos.push(novoProduto);
 

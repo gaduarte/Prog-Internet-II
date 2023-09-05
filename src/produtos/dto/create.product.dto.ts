@@ -1,20 +1,8 @@
+import { ProdutoStatus } from "../types/Produto-lista";
+import { ProdutosLiquidez } from "../types/Produto-lista";
 import { ApiProperty } from '@nestjs/swagger';
 
-export enum ProdutoStatus{
-    DISPONIVEL = 'DISPONIVEL',
-    INDISPONIVEL = 'INDISPONIVEL'
-  }
-
-export enum ProdutosLiquidez{
-  SIM = 'SIM',
-  NAO = 'NAO'
-}
-  
-  export class Produto {
-    @ApiProperty()
-    id: string;
-
-   
+export class NovoProdutoDto{
     @ApiProperty()
     nome: string;
 
@@ -37,14 +25,5 @@ export enum ProdutosLiquidez{
     status: ProdutoStatus;
 
     @ApiProperty()
-    liquidez: ProdutosLiquidez;
-  
-    constructor() {
-      
-    }
-  
+    liquidez: ProdutosLiquidez
   }
-  
- 
-
-

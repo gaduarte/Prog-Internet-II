@@ -1,49 +1,47 @@
-
-import { Controller, Get, Post, Body, Query, NotFoundException, Param, Render } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, NotFoundException, Param, HttpStatus } from '@nestjs/common';
 import { ProdutosService } from './produtos.service';
-import { NovoProdutoDto } from './types/Produto-lista';
+import { NovoProdutoDto } from './dto/create.product.dto';
+import { Produto } from './types/Produto-lista';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('api/produtos') 
 export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
 
-  @Get('/listar') // Endpoint para listar produtos em formato JSON
+  @Get('/listar')
+  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
   public listarProdutos() {
     const produtos = this.produtosService.todos();
     return { produtos }; 
   }
 
-  @Get('/:id') // Endpoint para obter um produto por ID em formato JSON
+  @Get('/:id') 
+  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
   public obterProdutoPorId(@Param('id') idProduto: string) {
   const produto = this.produtosService.obterPorId(idProduto);
 
   if (!produto) {
     throw new NotFoundException(`Produto com ID ${idProduto} não encontrado`);
   }
-
   return { produto };
 }
 
-  /*@Get('/novo')
-  @Render('produtos/form')
-  public formularioProduto(){
-        return;
-    }
-*/
-
   @Post('/salvar') 
+  @ApiResponse({status: HttpStatus.CREATED, type: Produto})
   public salvarProduto(@Body() input: NovoProdutoDto) {
     const novoProduto = this.produtosService.cadastrar(input);
     return { produto: novoProduto }; 
   }
 
-  @Get('/alternar-status') // Endpoint para alternar o status de um produto em formato JSON
+  @Get('/alternar-status') 
+  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
   public alternarStatus(@Query('id') idProduto: string) {
     this.produtosService.alternarStatus(idProduto);
     return { message: 'Status alterado com sucesso' }; 
   }
 
-  @Get('/remover') // Endpoint para remover um produto em formato JSON
+  @Get('/remover') 
+  @ApiResponse({status: HttpStatus.CREATED, type: Produto, isArray: true})
   public removerProduto(@Query('id') idProduto: string) {
     this.produtosService.remover(idProduto);
     return { message: 'Produto removido com sucesso' }; 
